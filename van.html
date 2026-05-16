@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Van detail — CampShare NZ</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%232d3a2e'/><circle cx='16' cy='16' r='4' fill='%23d49a4a'/></svg>" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" class="brand">
+        <span class="brand-mark"></span>
+        <span>CampShare<small>Aotearoa NZ</small></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="browse.html">Hire a van</a></li>
+        <li><a href="list.html">List your van</a></li>
+        <li><a href="buyback.html">Buyback</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="list.html" class="btn btn-ghost btn-sm">List your van</a>
+        <a href="browse.html" class="btn btn-primary btn-sm">Find a van</a>
+        <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="van-detail" style="padding-top: 2rem; padding-bottom: 5rem;">
+    <div class="wrap" id="van-root">
+      <!-- populated by script -->
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand"><span class="brand-mark"></span><strong>CampShare</strong></div>
+          <p class="footer-tag">A community of Kiwi campervan owners sharing their hand-built homes with travellers.</p>
+        </div>
+        <div class="footer-col"><h5>Hire</h5><ul><li><a href="browse.html">All vans</a></li><li><a href="browse.html?island=north">North Island</a></li><li><a href="browse.html?island=south">South Island</a></li></ul></div>
+        <div class="footer-col"><h5>Own</h5><ul><li><a href="list.html">List your van</a></li><li><a href="buyback.html">Buyback</a></li></ul></div>
+        <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+        <div class="footer-col"><h5>Legal</h5><ul><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> CampShare Aotearoa Ltd.</span><span>Ngā mihi nui — travel safe.</span></div>
+    </div>
+  </footer>
+
+  <script src="vans.js"></script>
+  <script src="main.js"></script>
+  <script>
+    const id = new URLSearchParams(window.location.search).get('id') || window.CAMPSHARE_VANS[0].id;
+    const v = window.CAMPSHARE_VANS.find(x => x.id === id) || window.CAMPSHARE_VANS[0];
+    document.title = `${v.name} — ${v.tagline} | CampShare NZ`;
+
+    const root = document.getElementById('van-root');
+    root.innerHTML = `
+      <div style="margin-bottom: 1rem;"><a href="browse.html" class="btn-link" style="font-size: 0.9rem;">← Back to all vans</a></div>
+
+      <div class="van-title-row">
+        <div>
+          <div class="eyebrow">${v.type}</div>
+          <h1 style="font-size: clamp(2rem, 4vw, 3rem); margin: 0.4rem 0 0.6rem;">${v.name}</h1>
+          <p class="lead" style="margin: 0;">${v.tagline}</p>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 1.1rem; color: var(--forest-deep); font-weight: 600;">★ ${v.rating}</div>
+          <div style="font-size: 0.9rem; color: var(--charcoal-soft);">${v.reviews} reviews</div>
+        </div>
+      </div>
+
+      <div class="van-meta-row" style="margin-top: 1.25rem;">
+        <span>📍 ${v.region}</span>
+        <span>🛏️ Sleeps ${v.sleeps}</span>
+        <span>🚐 ${v.seats} belted seats</span>
+        <span>${v.fixedToilet ? '✓ Self-contained' : '◌ Not self-contained'}</span>
+      </div>
+
+      <div class="van-hero">
+        <div class="van-hero-main" style="background-image:url('${v.images[0]}')"></div>
+        <div class="van-hero-side">
+          <div style="background-image:url('${v.images[1] || v.images[0]}')"></div>
+          <div style="background-image:url('${v.images[2] || v.images[1] || v.images[0]}')"></div>
+        </div>
+      </div>
+
+      <div class="van-detail">
+        <div>
+          <div class="van-section" style="border-top: 0; padding-top: 0;">
+            <h3>About ${v.name}</h3>
+            <p style="color: var(--charcoal-soft); font-size: 1.05rem; line-height: 1.7;">${v.description}</p>
+          </div>
+
+          <div class="van-section">
+            <h3>What's on board</h3>
+            <ul class="feature-grid">
+              ${v.features.map(f => `<li>${f}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="van-section">
+            <h3>Meet your host</h3>
+            <div class="host-card">
+              <div class="host-avatar">${v.host.initials}</div>
+              <div class="host-info">
+                <strong>${v.host.name}</strong>
+                <span>${v.host.tenure} · ${v.host.vans} van${v.host.vans > 1 ? 's' : ''} on CampShare</span>
+              </div>
+              <a href="#" class="btn btn-ghost btn-sm" style="margin-left: auto;">Message host</a>
+            </div>
+          </div>
+
+          <div class="van-section">
+            <h3>Trust & safety</h3>
+            <ul class="feature-grid">
+              <li>Comprehensive insurance included</li>
+              <li>24/7 roadside support</li>
+              <li>Identity-verified hosts</li>
+              <li>$2,000 host damage cover</li>
+              <li>Independently safety-inspected</li>
+              <li>Secure payment via Stripe</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside>
+          <div class="booking-card">
+            <div class="booking-price">
+              <strong id="book-price" data-price="${v.pricePerNight}">$${v.pricePerNight}</strong>
+              <span>per night</span>
+            </div>
+            <div class="booking-field">
+              <label>Pick up</label>
+              <input id="book-start" type="date" />
+            </div>
+            <div class="booking-field">
+              <label>Drop off</label>
+              <input id="book-end" type="date" />
+            </div>
+            <div class="booking-row">
+              <div class="booking-field">
+                <label>Adults</label>
+                <input type="number" value="2" min="1" max="${v.sleeps}" />
+              </div>
+              <div class="booking-field">
+                <label>Children</label>
+                <input type="number" value="0" min="0" max="${v.sleeps}" />
+              </div>
+            </div>
+            <div class="booking-total" id="book-total">Pick dates to see total</div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1.25rem; justify-content: center;">Request to book</button>
+            <p style="font-size: 0.78rem; color: var(--stone); text-align: center; margin-top: 0.8rem;">You won't be charged yet · 24h host response</p>
+          </div>
+        </aside>
+      </div>
+    `;
+  </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>List your campervan — Earn from your van | CampShare NZ</title>
+  <meta name="description" content="Earn from your hand-built campervan when you're not using it. Join CampShare's community of Kiwi owners — fully insured, fully supported." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%232d3a2e'/><circle cx='16' cy='16' r='4' fill='%23d49a4a'/></svg>" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" class="brand">
+        <span class="brand-mark"></span>
+        <span>CampShare<small>Aotearoa NZ</small></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="browse.html">Hire a van</a></li>
+        <li><a href="list.html" class="active">List your van</a></li>
+        <li><a href="buyback.html">Buyback</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="list.html" class="btn btn-ghost btn-sm">List your van</a>
+        <a href="browse.html" class="btn btn-primary btn-sm">Find a van</a>
+        <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero with calculator -->
+  <section class="list-hero">
+    <div class="hero-contour"></div>
+    <div class="wrap" style="position: relative; z-index: 2;">
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center;" class="hero-split">
+        <div>
+          <div class="hero-eyebrow eyebrow">For owners</div>
+          <h1>Your van pays for itself, <em>if you let it.</em></h1>
+          <p class="lead">Most CampShare vans are off the road 220 days a year. Lend yours out and let it earn while you work. We handle insurance, payments, screening — you just hand over the keys.</p>
+          <div style="margin-top: 2rem; display: flex; gap: 0.8rem; flex-wrap: wrap;">
+            <a href="#apply" class="btn btn-primary">List your van</a>
+            <a href="#how" class="btn btn-ghost" style="color: var(--cream); border-color: var(--cream);">How it works</a>
+          </div>
+        </div>
+
+        <div class="calc-card">
+          <div class="eyebrow">Earnings calculator</div>
+          <h3 style="margin: 0.5rem 0 1.25rem;">How much could your van earn?</h3>
+          <label style="display: block; font-size: 0.85rem; color: var(--charcoal-soft); margin-bottom: 0.4rem; font-weight: 500;">Days you'd lend it out per year</label>
+          <input type="range" id="calc-days" min="0" max="180" value="90" class="calc-input" style="padding: 0; height: 8px; accent-color: var(--clay);" />
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--stone); margin-bottom: 1.25rem;">
+            <span>0 days</span><span id="calc-value">90 days</span><span>180 days</span>
+          </div>
+          <div class="calc-result" id="calc-result"></div>
+          <p style="font-size: 0.75rem; color: var(--stone); text-align: center; margin-top: 1rem;">Estimate after our 20% service fee. Real earnings depend on van type, location and season.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @media (max-width: 900px) { .hero-split { grid-template-columns: 1fr !important; gap: 2rem !important; } }
+  </style>
+
+  <!-- How it works -->
+  <section class="section section-cream" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="copy">
+          <div class="eyebrow">How it works</div>
+          <h2>From application to first booking in a fortnight.</h2>
+        </div>
+        <p class="lead">No tyre-kickers. We screen every guest, manage every booking and turn up if anything goes wrong.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <h4>Apply online</h4>
+          <p>Tell us about your van, your build story, and where it's based. We'll come back within 48 hours.</p>
+        </div>
+        <div class="step">
+          <h4>Safety check</h4>
+          <p>One of our team meets you in person to inspect the van, photograph the interior, and get you set up.</p>
+        </div>
+        <div class="step">
+          <h4>Go live</h4>
+          <p>We write your listing, professionally photograph the van, and put it in front of travellers ready to book.</p>
+        </div>
+        <div class="step">
+          <h4>Earn</h4>
+          <p>Set your own calendar. Approve every booking. Get paid 48 hours after pick-up via direct credit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What you get -->
+  <section class="section section-sand">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="copy">
+          <div class="eyebrow">What's included</div>
+          <h2>We handle the boring bits.</h2>
+        </div>
+      </div>
+
+      <div class="promise" style="max-width: 800px;">
+        <div class="promise-item">
+          <span class="promise-num">i.</span>
+          <div>
+            <h4>Full comprehensive insurance</h4>
+            <p>Every booking is covered by our $2m commercial policy. Your guest is bonded for $2,000 of damage cover. You're never out of pocket.</p>
+          </div>
+        </div>
+        <div class="promise-item">
+          <span class="promise-num">ii.</span>
+          <div>
+            <h4>Guest screening & ID verification</h4>
+            <p>We verify every renter's identity, licence and driving history before they ever see your address. You approve every booking.</p>
+          </div>
+        </div>
+        <div class="promise-item">
+          <span class="promise-num">iii.</span>
+          <div>
+            <h4>24/7 roadside & guest support</h4>
+            <p>If something breaks on the road, the guest calls us — not you. We have repairers on retainer across NZ.</p>
+          </div>
+        </div>
+        <div class="promise-item">
+          <span class="promise-num">iv.</span>
+          <div>
+            <h4>Professional photography</h4>
+            <p>One of our local photographers shoots your van so it actually looks like itself. No phone-snap listings.</p>
+          </div>
+        </div>
+        <div class="promise-item">
+          <span class="promise-num">v.</span>
+          <div>
+            <h4>You stay in control</h4>
+            <p>Block out dates anytime. Set rules. Decide who drives. Stop hosting whenever you want — no contract, no fees to leave.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Apply -->
+  <section class="section section-cream" id="apply">
+    <div class="wrap" style="max-width: 720px;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="eyebrow">Apply to host</div>
+        <h2 style="margin: 0.6rem 0 1rem;">Tell us about your van.</h2>
+        <p class="lead">It takes about three minutes. We'll be in touch within two working days.</p>
+      </div>
+
+      <form id="apply-form" style="display: grid; gap: 1rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="booking-field">
+            <label>First name</label>
+            <input type="text" required />
+          </div>
+          <div class="booking-field">
+            <label>Last name</label>
+            <input type="text" required />
+          </div>
+        </div>
+        <div class="booking-field">
+          <label>Email</label>
+          <input type="email" required />
+        </div>
+        <div class="booking-field">
+          <label>Phone</label>
+          <input type="tel" required />
+        </div>
+        <div class="booking-field">
+          <label>Where is your van based?</label>
+          <input type="text" placeholder="e.g. Mt Eden, Auckland" required />
+        </div>
+        <div class="booking-field">
+          <label>Type of van</label>
+          <select style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem;">
+            <option>Self-contained van</option>
+            <option>Micro camper</option>
+            <option>4WD camper</option>
+            <option>Camper bus</option>
+            <option>Heritage / vintage</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="booking-field">
+          <label>Tell us about your van</label>
+          <textarea rows="4" placeholder="What's the story? Year, make, who built it, what makes it yours..." style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem; resize: vertical;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content: center; padding: 1.1rem;">Submit application</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand"><span class="brand-mark"></span><strong>CampShare</strong></div>
+          <p class="footer-tag">A community of Kiwi campervan owners sharing their hand-built homes with travellers.</p>
+        </div>
+        <div class="footer-col"><h5>Hire</h5><ul><li><a href="browse.html">All vans</a></li><li><a href="browse.html?island=north">North Island</a></li><li><a href="browse.html?island=south">South Island</a></li></ul></div>
+        <div class="footer-col"><h5>Own</h5><ul><li><a href="list.html">List your van</a></li><li><a href="buyback.html">Buyback</a></li></ul></div>
+        <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+        <div class="footer-col"><h5>Legal</h5><ul><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> CampShare Aotearoa Ltd.</span><span>Ngā mihi nui — travel safe.</span></div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Custom slider display
+    const slider = document.getElementById('calc-days');
+    const valueLabel = document.getElementById('calc-value');
+    if (slider && valueLabel) {
+      slider.addEventListener('input', () => valueLabel.textContent = `${slider.value} days`);
+    }
+
+    // Apply form submission (demo)
+    const applyForm = document.getElementById('apply-form');
+    if (applyForm) {
+      applyForm.addEventListener('submit', e => {
+        e.preventDefault();
+        applyForm.innerHTML = `
+          <div style="text-align:center; padding:3rem; background:var(--sand); border-radius:var(--radius-lg);">
+            <h3>Kia ora — application received.</h3>
+            <p style="color:var(--charcoal-soft); margin-top:1rem;">We'll be in touch within two working days.</p>
+          </div>`;
+      });
+    }
+  </script>
+</body>
+</html>

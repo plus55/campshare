@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CampShare NZ — Rent a Kiwi-built campervan from a local</title>
+  <meta name="description" content="CampShare is New Zealand's community campervan share. Hire hand-built campervans from local Kiwi owners, rent direct from us, or trade your van back when you're done." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%232d3a2e'/><circle cx='16' cy='16' r='4' fill='%23d49a4a'/></svg>" />
+</head>
+<body>
+
+  <!-- Announcement -->
+  <div class="announce">
+    Autumn road-trip vans · <a href="browse.html">15% off stays of 4 weeks or more →</a>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" class="brand">
+        <span class="brand-mark"></span>
+        <span>CampShare<small>Aotearoa NZ</small></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="browse.html">Hire a van</a></li>
+        <li><a href="list.html">List your van</a></li>
+        <li><a href="buyback.html">Buyback</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="list.html" class="btn btn-ghost btn-sm">List your van</a>
+        <a href="browse.html" class="btn btn-primary btn-sm">Find a van</a>
+        <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-contour"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow eyebrow">A Kiwi community of campervan owners</div>
+      <h1 class="fade-in fade-in-1">Borrow a <em>handmade</em><br/>home on wheels.</h1>
+      <p class="hero-sub fade-in fade-in-2">CampShare connects you with local Kiwis who'll lend you the campervan they built. No fleet vans. No airport queues. Just real vans, real people, real road trips.</p>
+
+      <form class="search-panel fade-in fade-in-3" action="browse.html" method="get">
+        <div class="search-field">
+          <label for="loc">Where</label>
+          <select id="loc" name="region">
+            <option value="">Anywhere in Aotearoa</option>
+            <option>Auckland</option>
+            <option>Coromandel/BOP</option>
+            <option>Wellington</option>
+            <option>Nelson</option>
+            <option>Christchurch</option>
+            <option>Queenstown</option>
+            <option>Dunedin</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label for="start">Pick up</label>
+          <input id="start" type="date" name="start" />
+        </div>
+        <div class="search-field">
+          <label for="end">Drop off</label>
+          <input id="end" type="date" name="end" />
+        </div>
+        <button type="submit" class="btn btn-primary">Search vans</button>
+      </form>
+
+      <div class="hero-stats">
+        <div class="stat"><strong>240+</strong><span>Vans across NZ</span></div>
+        <div class="stat"><strong>4.9★</strong><span>Average rating</span></div>
+        <div class="stat"><strong>100%</strong><span>Kiwi-owned</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Press strip -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="press-strip">
+        <span>As featured in</span>
+        <span>· Stuff ·</span>
+        <span>· NZ Herald ·</span>
+        <span>· The Spinoff ·</span>
+        <span>· Urban List ·</span>
+        <span>· Good Magazine ·</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three pillars -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="copy">
+          <div class="eyebrow">How CampShare works</div>
+          <h2>Three ways to roll.</h2>
+        </div>
+        <p class="lead">Whether you're chasing a long weekend or thinking about life on the road, we've got a path. Pick yours.</p>
+      </div>
+
+      <div class="pillars">
+        <a href="browse.html" class="pillar">
+          <div class="pillar-icon">⛰️</div>
+          <div class="pillar-num">No. 01</div>
+          <h3>Hire from a local owner</h3>
+          <p>Browse vans built by Kiwis around the country. Each one's hand-converted, fully insured, and comes with a real human at the end of the line.</p>
+          <span class="btn-link">Find a van <span>→</span></span>
+        </a>
+
+        <a href="browse.html?type=fleet" class="pillar">
+          <div class="pillar-icon">🛻</div>
+          <div class="pillar-num">No. 02</div>
+          <h3>Rent direct from us</h3>
+          <p>Need certainty? Our own small fleet of CampShare vans is ready at hubs in Auckland, Wellington and Christchurch. Same custom feel, no booking back-and-forth.</p>
+          <span class="btn-link">See our vans <span>→</span></span>
+        </a>
+
+        <a href="buyback.html" class="pillar">
+          <div class="pillar-icon">🔁</div>
+          <div class="pillar-num">No. 03</div>
+          <h3>Buy with buyback</h3>
+          <p>Buy a CampShare van today, drive it as long as you want, and we'll buy it back at a guaranteed price when you're done. Built for travellers, working-holidayers and gap-year crews.</p>
+          <span class="btn-link">How buyback works <span>→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured vans -->
+  <section class="section section-sand">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="copy">
+          <div class="eyebrow">Loved by guests this month</div>
+          <h2>Featured campervans.</h2>
+        </div>
+        <a href="browse.html" class="btn-link">Browse all 240+ vans <span>→</span></a>
+      </div>
+
+      <div class="van-grid" id="featured-vans"></div>
+    </div>
+  </section>
+
+  <!-- Featured trip / editorial -->
+  <section class="section">
+    <div class="wrap">
+      <div class="featured-trip">
+        <div class="featured-img"></div>
+        <div class="featured-body">
+          <div class="eyebrow">Trip ideas</div>
+          <h2 style="margin: 0.8rem 0 1.2rem;">The <em class="text-italic">slow</em><br/>South Island.</h2>
+          <p class="lead" style="margin-bottom: 1.5rem;">Twelve days from Picton to Bluff, with stops at every hot pool, hut and one-tank-of-fuel detour we could find.</p>
+          <a href="#" class="btn btn-dark">Read the itinerary</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section section-sand">
+    <div class="wrap">
+      <div class="section-head" style="justify-content: center; text-align: center; flex-direction: column; align-items: center;">
+        <div class="eyebrow">From our community</div>
+        <h2>Words from the road.</h2>
+      </div>
+
+      <div class="quote-grid">
+        <div class="quote">
+          <blockquote>Picked up a van in Christchurch from a woman who'd built every cabinet herself. She drew us a map of her favourite spots on the West Coast. That's not something you get from a rental desk.</blockquote>
+          <cite>
+            <span class="quote-avatar">EM</span>
+            <span><strong>Emma & Marcus</strong><br><span>Hired Pounamu · 9 nights</span></span>
+          </cite>
+        </div>
+        <div class="quote">
+          <blockquote>I bought a van through CampShare last September, drove the length of the country, and they bought it back at the price they said they would. No drama. Best year of my life.</blockquote>
+          <cite>
+            <span class="quote-avatar">LS</span>
+            <span><strong>Linnea S.</strong><br><span>Buyback customer · Sweden</span></span>
+          </cite>
+        </div>
+        <div class="quote">
+          <blockquote>Our van pays for itself ten times over. It's parked half the year, now it works for us. The CampShare team handle everything except waving them off.</blockquote>
+          <cite>
+            <span class="quote-avatar">H</span>
+            <span><strong>Hemi</strong><br><span>Hosts Rangi · Auckland</span></span>
+          </cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Band -->
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>Get road-trip ideas <em>once a month.</em></h2>
+      <p>Slow itineraries, new vans on the platform, hot pool recommendations. No spam, unsubscribe anytime.</p>
+      <form class="cta-form">
+        <input type="email" placeholder="you@email.com" required />
+        <button class="btn btn-primary" type="submit">Sign me up</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <span class="brand-mark"></span>
+            <strong>CampShare</strong>
+          </div>
+          <p class="footer-tag">A community of Kiwi campervan owners sharing their hand-built homes with travellers. Built in Aotearoa, since 2021.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Hire</h5>
+          <ul>
+            <li><a href="browse.html">All vans</a></li>
+            <li><a href="browse.html?island=north">North Island</a></li>
+            <li><a href="browse.html?island=south">South Island</a></li>
+            <li><a href="browse.html?fixed=true">Freedom camping</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Own</h5>
+          <ul>
+            <li><a href="list.html">List your van</a></li>
+            <li><a href="buyback.html">Buyback programme</a></li>
+            <li><a href="#">Host insurance</a></li>
+            <li><a href="#">Earnings calculator</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="about.html">About us</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <ul>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Insurance</a></li>
+            <li><a href="#">Trust & safety</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> CampShare Aotearoa Ltd. Made in NZ.</span>
+        <span>Ngā mihi nui — travel safe.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="vans.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Render featured vans (first 4 from sample data)
+    const grid = document.getElementById('featured-vans');
+    const featured = window.CAMPSHARE_VANS.slice(0, 4);
+    grid.innerHTML = featured.map(v => `
+      <a href="van.html?id=${v.id}" class="van-card">
+        <div class="van-img" style="background-image:url('${v.image}')">
+          ${v.badge ? `<span class="van-badge ${v.badge === 'Top rated' ? 'clay' : ''}">${v.badge}</span>` : ''}
+          <button class="van-fav" aria-label="Save">♡</button>
+        </div>
+        <div class="van-body">
+          <div class="van-head">
+            <span class="van-name">${v.name}</span>
+            <span class="van-rating">★ ${v.rating} <span style="color:var(--stone)">(${v.reviews})</span></span>
+          </div>
+          <div class="van-meta">${v.type} · ${v.region} · Sleeps ${v.sleeps}</div>
+          <div class="van-tags">${v.tags.map(t => `<span class="van-tag">${t}</span>`).join('')}</div>
+          <div class="van-price">
+            <strong>$${v.pricePerNight}</strong><span>per night</span>
+          </div>
+        </div>
+      </a>
+    `).join('');
+  </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Browse campervans — CampShare NZ</title>
+  <meta name="description" content="Browse hand-built campervans for hire across New Zealand. Filter by region, price, sleeping capacity and features." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%232d3a2e'/><circle cx='16' cy='16' r='4' fill='%23d49a4a'/></svg>" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" class="brand">
+        <span class="brand-mark"></span>
+        <span>CampShare<small>Aotearoa NZ</small></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="browse.html" class="active">Hire a van</a></li>
+        <li><a href="list.html">List your van</a></li>
+        <li><a href="buyback.html">Buyback</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="list.html" class="btn btn-ghost btn-sm">List your van</a>
+        <a href="browse.html" class="btn btn-primary btn-sm">Find a van</a>
+        <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Page intro -->
+  <section style="padding: 3rem 0 1.5rem; background: var(--cream); border-bottom: 1px solid var(--line);">
+    <div class="wrap">
+      <div class="eyebrow">Browse all vans</div>
+      <h1 style="margin: 0.6rem 0 0.8rem; font-size: clamp(2rem, 4vw, 3rem);">Vans across <em class="text-italic">Aotearoa.</em></h1>
+      <p class="lead" style="max-width: 60ch;">Every van on CampShare is hand-built or hand-loved by its owner. Filter to find yours.</p>
+    </div>
+  </section>
+
+  <section style="padding: 3rem 0 5rem;">
+    <div class="wrap">
+      <div class="browse-layout">
+
+        <!-- Filters sidebar -->
+        <aside class="filters">
+          <div class="filter-group">
+            <h4>Island</h4>
+            <label class="filter-check"><input type="radio" name="island" value="all" checked /> All of Aotearoa</label>
+            <label class="filter-check"><input type="radio" name="island" value="north" /> North Island</label>
+            <label class="filter-check"><input type="radio" name="island" value="south" /> South Island</label>
+          </div>
+          <div class="filter-group">
+            <h4>Region</h4>
+            <label class="filter-check"><input type="checkbox" data-filter="region" value="Auckland" /> Auckland</label>
+            <label class="filter-check"><input type="checkbox" data-filter="region" value="Wellington" /> Wellington</label>
+            <label class="filter-check"><input type="checkbox" data-filter="region" value="Coromandel/BOP" /> Coromandel / BOP</label>
+            <label class="filter-check"><input type="checkbox" data-filter="region" value="Nelson" /> Nelson</label>
+            <label class="filter-check"><input type="checkbox" data-filter="region" value="Christchurch" /> Christchurch</label>
+            <label class="filter-check"><input type="checkbox" data-filter="region" value="Queenstown" /> Queenstown</label>
+            <label class="filter-check"><input type="checkbox" data-filter="region" value="Dunedin" /> Dunedin</label>
+          </div>
+          <div class="filter-group">
+            <h4>Sleeps</h4>
+            <label class="filter-check"><input type="checkbox" data-filter="sleeps" value="2" /> 2 people</label>
+            <label class="filter-check"><input type="checkbox" data-filter="sleeps" value="3" /> 3+ people</label>
+            <label class="filter-check"><input type="checkbox" data-filter="sleeps" value="5" /> 5+ people</label>
+          </div>
+          <div class="filter-group">
+            <h4>Features</h4>
+            <label class="filter-check"><input type="checkbox" data-feature="fixedToilet" /> Self-contained (fixed toilet)</label>
+            <label class="filter-check"><input type="checkbox" data-tag="Pet friendly" /> Pet friendly</label>
+            <label class="filter-check"><input type="checkbox" data-tag="4WD" /> 4WD</label>
+            <label class="filter-check"><input type="checkbox" data-tag="Off-grid" /> Off-grid ready</label>
+          </div>
+          <div class="filter-group">
+            <h4>Price per night</h4>
+            <div class="filter-range">
+              <input type="number" id="price-min" placeholder="Min" />
+              <span style="color: var(--stone)">–</span>
+              <input type="number" id="price-max" placeholder="Max" />
+            </div>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="clear-filters" style="width: 100%; margin-top: 0.5rem; justify-content: center;">Clear filters</button>
+        </aside>
+
+        <!-- Results -->
+        <div>
+          <div class="browse-toolbar">
+            <div class="browse-count"><strong id="count">0</strong> vans match your search</div>
+            <select class="sort-select" id="sort">
+              <option value="rating">Sort by rating</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="reviews">Most reviewed</option>
+            </select>
+          </div>
+          <div class="van-grid" id="results"></div>
+          <div class="empty-state" id="empty" style="display:none;">
+            <h3>No vans match those filters</h3>
+            <p>Try widening your search — or clear filters and start again.</p>
+            <button class="btn btn-primary" onclick="document.getElementById('clear-filters').click()">Clear filters</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand"><span class="brand-mark"></span><strong>CampShare</strong></div>
+          <p class="footer-tag">A community of Kiwi campervan owners sharing their hand-built homes with travellers.</p>
+        </div>
+        <div class="footer-col"><h5>Hire</h5><ul><li><a href="browse.html">All vans</a></li><li><a href="browse.html?island=north">North Island</a></li><li><a href="browse.html?island=south">South Island</a></li></ul></div>
+        <div class="footer-col"><h5>Own</h5><ul><li><a href="list.html">List your van</a></li><li><a href="buyback.html">Buyback</a></li></ul></div>
+        <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+        <div class="footer-col"><h5>Legal</h5><ul><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> CampShare Aotearoa Ltd.</span><span>Ngā mihi nui — travel safe.</span></div>
+    </div>
+  </footer>
+
+  <script src="vans.js"></script>
+  <script src="main.js"></script>
+  <script>
+    const state = {
+      island: 'all',
+      regions: new Set(),
+      sleeps: new Set(),
+      features: { fixedToilet: false },
+      tags: new Set(),
+      priceMin: null,
+      priceMax: null,
+      sort: 'rating'
+    };
+
+    function render() {
+      let vans = window.CAMPSHARE_VANS.slice();
+
+      if (state.island !== 'all') vans = vans.filter(v => v.island === state.island);
+      if (state.regions.size) vans = vans.filter(v => state.regions.has(v.region));
+      if (state.sleeps.size) {
+        vans = vans.filter(v => {
+          if (state.sleeps.has('5') && v.sleeps >= 5) return true;
+          if (state.sleeps.has('3') && v.sleeps >= 3) return true;
+          if (state.sleeps.has('2') && v.sleeps === 2) return true;
+          return false;
+        });
+      }
+      if (state.features.fixedToilet) vans = vans.filter(v => v.fixedToilet);
+      if (state.tags.size) vans = vans.filter(v => [...state.tags].every(t => v.tags.includes(t)));
+      if (state.priceMin !== null) vans = vans.filter(v => v.pricePerNight >= state.priceMin);
+      if (state.priceMax !== null) vans = vans.filter(v => v.pricePerNight <= state.priceMax);
+
+      switch (state.sort) {
+        case 'price-asc': vans.sort((a,b) => a.pricePerNight - b.pricePerNight); break;
+        case 'price-desc': vans.sort((a,b) => b.pricePerNight - a.pricePerNight); break;
+        case 'reviews': vans.sort((a,b) => b.reviews - a.reviews); break;
+        default: vans.sort((a,b) => b.rating - a.rating);
+      }
+
+      document.getElementById('count').textContent = vans.length;
+      const results = document.getElementById('results');
+      const empty = document.getElementById('empty');
+
+      if (!vans.length) {
+        results.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      results.innerHTML = vans.map(v => `
+        <a href="van.html?id=${v.id}" class="van-card">
+          <div class="van-img" style="background-image:url('${v.image}')">
+            ${v.badge ? `<span class="van-badge ${v.badge === 'Top rated' ? 'clay' : ''}">${v.badge}</span>` : ''}
+            <button class="van-fav" aria-label="Save" onclick="event.preventDefault();this.textContent=this.textContent==='♡'?'♥':'♡';this.style.color=this.textContent==='♥'?'var(--clay)':'';">♡</button>
+          </div>
+          <div class="van-body">
+            <div class="van-head">
+              <span class="van-name">${v.name}</span>
+              <span class="van-rating">★ ${v.rating} <span style="color:var(--stone)">(${v.reviews})</span></span>
+            </div>
+            <div class="van-meta">${v.type} · ${v.region} · Sleeps ${v.sleeps}</div>
+            <div class="van-tags">${v.tags.map(t => `<span class="van-tag">${t}</span>`).join('')}</div>
+            <div class="van-price">
+              <strong>$${v.pricePerNight}</strong><span>per night</span>
+            </div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // Wire up filters
+    document.querySelectorAll('input[name="island"]').forEach(r => {
+      r.addEventListener('change', () => { state.island = r.value; render(); });
+    });
+    document.querySelectorAll('input[data-filter="region"]').forEach(c => {
+      c.addEventListener('change', () => {
+        c.checked ? state.regions.add(c.value) : state.regions.delete(c.value);
+        render();
+      });
+    });
+    document.querySelectorAll('input[data-filter="sleeps"]').forEach(c => {
+      c.addEventListener('change', () => {
+        c.checked ? state.sleeps.add(c.value) : state.sleeps.delete(c.value);
+        render();
+      });
+    });
+    document.querySelectorAll('input[data-feature]').forEach(c => {
+      c.addEventListener('change', () => { state.features[c.dataset.feature] = c.checked; render(); });
+    });
+    document.querySelectorAll('input[data-tag]').forEach(c => {
+      c.addEventListener('change', () => {
+        c.checked ? state.tags.add(c.dataset.tag) : state.tags.delete(c.dataset.tag);
+        render();
+      });
+    });
+    document.getElementById('price-min').addEventListener('input', e => {
+      state.priceMin = e.target.value ? parseFloat(e.target.value) : null; render();
+    });
+    document.getElementById('price-max').addEventListener('input', e => {
+      state.priceMax = e.target.value ? parseFloat(e.target.value) : null; render();
+    });
+    document.getElementById('sort').addEventListener('change', e => { state.sort = e.target.value; render(); });
+
+    document.getElementById('clear-filters').addEventListener('click', () => {
+      state.island = 'all'; state.regions.clear(); state.sleeps.clear();
+      state.features = { fixedToilet: false }; state.tags.clear();
+      state.priceMin = null; state.priceMax = null; state.sort = 'rating';
+      document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+      document.querySelector('input[name="island"][value="all"]').checked = true;
+      document.getElementById('price-min').value = '';
+      document.getElementById('price-max').value = '';
+      document.getElementById('sort').value = 'rating';
+      render();
+    });
+
+    // URL query params (from homepage search)
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('region')) {
+      const region = params.get('region');
+      state.regions.add(region);
+      const cb = document.querySelector(`input[data-filter="region"][value="${region}"]`);
+      if (cb) cb.checked = true;
+    }
+    if (params.get('island')) {
+      state.island = params.get('island');
+      const r = document.querySelector(`input[name="island"][value="${state.island}"]`);
+      if (r) r.checked = true;
+    }
+    if (params.get('fixed') === 'true') {
+      state.features.fixedToilet = true;
+      document.querySelector('input[data-feature="fixedToilet"]').checked = true;
+    }
+
+    render();
+  </script>
+</body>
+</html>
