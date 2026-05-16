@@ -11,16 +11,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
-  // Newsletter form (just a friendly demo)
+  // Newsletter form — sends to API
   document.querySelectorAll('.cta-form').forEach(f => {
-    f.addEventListener('submit', e => {
+    f.addEventListener('submit', async e => {
       e.preventDefault();
       const input = f.querySelector('input');
       const btn = f.querySelector('button');
-      btn.textContent = 'Subscribed ✓';
+      const email = input.value.trim();
+      if (!email) return;
+      const originalText = btn.textContent;
+      btn.textContent = 'Sending...';
       btn.disabled = true;
-      input.value = '';
-      setTimeout(() => { btn.textContent = 'Sign me up'; btn.disabled = false; }, 3000);
+      try {
+        const res = await fetch('/api/newsletter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        if (!res.ok) throw new Error('Failed');
+        btn.textContent = 'Subscribed ✓';
+        input.value = '';
+        setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 4000);
+      } catch (err) {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        alert('Something went wrong. Please try again or email hello@campshare.co.nz');
+      }
     });
   });
 

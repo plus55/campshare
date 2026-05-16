@@ -146,20 +146,113 @@
             <div class="booking-row">
               <div class="booking-field">
                 <label>Adults</label>
-                <input type="number" value="2" min="1" max="${v.sleeps}" />
+                <input id="book-adults" type="number" value="2" min="1" max="${v.sleeps}" />
               </div>
               <div class="booking-field">
                 <label>Children</label>
-                <input type="number" value="0" min="0" max="${v.sleeps}" />
+                <input id="book-children" type="number" value="0" min="0" max="${v.sleeps}" />
               </div>
             </div>
             <div class="booking-total" id="book-total">Pick dates to see total</div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1.25rem; justify-content: center;">Request to book</button>
+            <button class="btn btn-primary" id="book-btn" style="width: 100%; margin-top: 1.25rem; justify-content: center;">Request to book</button>
             <p style="font-size: 0.78rem; color: var(--stone); text-align: center; margin-top: 0.8rem;">You won't be charged yet · 24h host response</p>
+          </div>
+
+          <!-- Booking enquiry modal -->
+          <div id="booking-modal" style="display:none; position:fixed; inset:0; background:rgba(31,42,32,0.85); z-index:100; align-items:center; justify-content:center; padding:1.5rem;">
+            <div style="background:var(--cream); border-radius:var(--radius-lg); max-width:520px; width:100%; padding:2.5rem; max-height:90vh; overflow-y:auto;">
+              <div class="eyebrow">Booking enquiry</div>
+              <h2 style="margin:0.6rem 0 0.5rem; font-size:1.7rem;">Tell us about your trip</h2>
+              <p style="color:var(--charcoal-soft); margin-bottom:1.5rem; font-size:0.95rem;">We'll send you a confirmation and connect you with the host within 24 hours.</p>
+              <form id="booking-form" style="display:grid; gap:0.8rem;">
+                <div class="booking-field">
+                  <label>Your name</label>
+                  <input type="text" name="firstName" required />
+                </div>
+                <div class="booking-field">
+                  <label>Email</label>
+                  <input type="email" name="email" required />
+                </div>
+                <div class="booking-field">
+                  <label>Phone</label>
+                  <input type="tel" name="phone" required />
+                </div>
+                <div class="booking-field">
+                  <label>Anything we should know? (optional)</label>
+                  <textarea name="message" rows="3" style="border:0; background:transparent; outline:none; font-family:var(--body); font-size:0.95rem; resize:vertical;"></textarea>
+                </div>
+                <div id="booking-summary" style="padding:1rem; background:var(--sand); border-radius:var(--radius); font-size:0.9rem; color:var(--charcoal-soft);"></div>
+                <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                  <button type="button" id="booking-cancel" class="btn btn-ghost" style="flex:1; justify-content:center;">Cancel</button>
+                  <button type="submit" class="btn btn-primary" style="flex:2; justify-content:center;">Send enquiry</button>
+                </div>
+              </form>
+            </div>
           </div>
         </aside>
       </div>
     `;
+
+    // Booking enquiry modal logic
+    const modal = document.getElementById('booking-modal');
+    const bookBtn = document.getElementById('book-btn');
+    const cancelBtn = document.getElementById('booking-cancel');
+    const bookingForm = document.getElementById('booking-form');
+    const summary = document.getElementById('booking-summary');
+
+    bookBtn.addEventListener('click', () => {
+      const start = document.getElementById('book-start').value;
+      const end = document.getElementById('book-end').value;
+      const adults = document.getElementById('book-adults').value;
+      const children = document.getElementById('book-children').value;
+      if (!start || !end) {
+        alert('Please pick a pick-up and drop-off date first.');
+        return;
+      }
+      const s = new Date(start), e = new Date(end);
+      if (e <= s) {
+        alert('Drop-off must be after pick-up.');
+        return;
+      }
+      const nights = Math.round((e - s) / 86400000);
+      summary.innerHTML = `<strong>${v.name}</strong> · ${nights} night${nights !== 1 ? 's' : ''} · ${start} to ${end} · ${adults} adult${adults!=='1'?'s':''}${children > 0 ? `, ${children} child${children!=='1'?'ren':''}` : ''}<br/><strong style="color:var(--forest-deep); font-size:1.05rem;">$${(nights * v.pricePerNight).toLocaleString()} estimated total</strong>`;
+      modal.style.display = 'flex';
+    });
+
+    cancelBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+    bookingForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const fd = new FormData(bookingForm);
+      const data = Object.fromEntries(fd.entries());
+      data.vanId = v.id;
+      data.vanName = v.name;
+      data.start = document.getElementById('book-start').value;
+      data.end = document.getElementById('book-end').value;
+      data.adults = document.getElementById('book-adults').value;
+      data.children = document.getElementById('book-children').value;
+      const btn = bookingForm.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/booking-enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Failed');
+        bookingForm.innerHTML = `<div style="text-align:center; padding:2rem;">
+          <h3 style="margin-bottom:0.8rem;">Kia ora — enquiry sent.</h3>
+          <p style="color:var(--charcoal-soft); margin-bottom:1.5rem;">Check your inbox for a confirmation. We'll be in touch within 24 hours.</p>
+          <button type="button" class="btn btn-dark" onclick="document.getElementById('booking-modal').style.display='none'">Close</button>
+        </div>`;
+      } catch (err) {
+        btn.textContent = 'Send enquiry';
+        btn.disabled = false;
+        alert('Something went wrong. Please email bookings@campshare.co.nz directly.');
+      }
+    });
   </script>
 </body>
 </html>

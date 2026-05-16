@@ -160,28 +160,28 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="booking-field">
             <label>First name</label>
-            <input type="text" required />
+            <input type="text" name="firstName" required />
           </div>
           <div class="booking-field">
             <label>Last name</label>
-            <input type="text" required />
+            <input type="text" name="lastName" required />
           </div>
         </div>
         <div class="booking-field">
           <label>Email</label>
-          <input type="email" required />
+          <input type="email" name="email" required />
         </div>
         <div class="booking-field">
           <label>Phone</label>
-          <input type="tel" required />
+          <input type="tel" name="phone" required />
         </div>
         <div class="booking-field">
           <label>Where is your van based?</label>
-          <input type="text" placeholder="e.g. Mt Eden, Auckland" required />
+          <input type="text" name="location" placeholder="e.g. Mt Eden, Auckland" required />
         </div>
         <div class="booking-field">
           <label>Type of van</label>
-          <select style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem;">
+          <select name="vanType" style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem;">
             <option>Self-contained van</option>
             <option>Micro camper</option>
             <option>4WD camper</option>
@@ -192,7 +192,7 @@
         </div>
         <div class="booking-field">
           <label>Tell us about your van</label>
-          <textarea rows="4" placeholder="What's the story? Year, make, who built it, what makes it yours..." style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem; resize: vertical;"></textarea>
+          <textarea name="vanDescription" rows="4" placeholder="What's the story? Year, make, who built it, what makes it yours..." style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem; resize: vertical;"></textarea>
         </div>
         <button type="submit" class="btn btn-primary" style="justify-content: center; padding: 1.1rem;">Submit application</button>
       </form>
@@ -224,16 +224,34 @@
       slider.addEventListener('input', () => valueLabel.textContent = `${slider.value} days`);
     }
 
-    // Apply form submission (demo)
+    // Apply form submission — sends to API
     const applyForm = document.getElementById('apply-form');
     if (applyForm) {
-      applyForm.addEventListener('submit', e => {
+      applyForm.addEventListener('submit', async e => {
         e.preventDefault();
-        applyForm.innerHTML = `
-          <div style="text-align:center; padding:3rem; background:var(--sand); border-radius:var(--radius-lg);">
-            <h3>Kia ora — application received.</h3>
-            <p style="color:var(--charcoal-soft); margin-top:1rem;">We'll be in touch within two working days.</p>
-          </div>`;
+        const formData = new FormData(applyForm);
+        const data = Object.fromEntries(formData.entries());
+        const btn = applyForm.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        try {
+          const res = await fetch('/api/host-apply', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          if (!res.ok) throw new Error('Submission failed');
+          applyForm.innerHTML = `
+            <div style="text-align:center; padding:3rem; background:var(--sand); border-radius:var(--radius-lg);">
+              <h3>Kia ora — application received.</h3>
+              <p style="color:var(--charcoal-soft); margin-top:1rem;">We'll be in touch within two working days. Check your inbox for a confirmation.</p>
+            </div>`;
+        } catch (err) {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          alert('Something went wrong. Please email hosts@campshare.co.nz directly or try again.');
+        }
       });
     }
   </script>
