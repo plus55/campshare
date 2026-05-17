@@ -132,19 +132,33 @@ async function handleNewsletter(env, data) {
 }
 
 async function handleBuybackEnquiry(env, data) {
-  const { firstName, email, phone, message } = data;
+  const { firstName, lastName, email, phone, when, duration, budget, message } = data;
   if (!email) return jsonResponse({ error: 'Email required' }, 400);
+
+  const fullName = `${firstName || ''} ${lastName || ''}`.trim();
 
   const adminHtml = wrapEmail('Buyback enquiry',
     `<p>Someone is interested in the buyback programme.</p>
-    <table style="width:100%;border-collapse:separate;border-spacing:0 4px;">${rowsHtml([
-      ['Name', firstName],
+    <table style="width:100%;border-collapse:separate;border-spacing:0 4px;font-size:14px;">${rowsHtml([
+      ['Name', fullName],
       ['Email', email],
       ['Phone', phone],
+      ['Travel timing', when],
+      ['Trip length', duration],
+      ['Budget', budget],
       ['Message', message]
-    ])}</table>`);
+    ])}</table>
+    <p style="margin-top:24px;font-size:13px;color:#3a3a3a;">Reply to this email to respond directly.</p>`);
 
-  await sendEmail(env, { from: FROM_ADDRESSES.buyback, to: NOTIFY_TO, subject: `Buyback enquiry — ${firstName || email}`, html: adminHtml, replyTo: email });
+  const userHtml = wrapEmail(`Kia ora ${escapeHtml(firstName || '')}`,
+    `<p>Thanks for your buyback enquiry. We've got the details and someone from our team will be in touch within one working day with options that fit what you're after.</p>
+    <p>If you have anything to add in the meantime, just reply to this email.</p>
+    <p style="margin-top:24px;">Ngā mihi,<br/><strong>The CampShare team</strong></p>`);
+
+  await Promise.all([
+    sendEmail(env, { from: FROM_ADDRESSES.buyback, to: NOTIFY_TO, subject: `Buyback enquiry — ${fullName || email}`, html: adminHtml, replyTo: email }),
+    sendEmail(env, { from: FROM_ADDRESSES.buyback, to: email, subject: 'Your CampShare buyback enquiry', html: userHtml })
+  ]);
 
   return jsonResponse({ ok: true });
 }

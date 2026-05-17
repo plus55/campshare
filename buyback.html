@@ -40,6 +40,7 @@
           <h1 style="margin: 0.8rem 0 1.5rem;">Own the van. Drive the country. <em class="text-italic">Sell it back.</em></h1>
           <p class="lead" style="margin-bottom: 2rem;">Buy a hand-built CampShare van outright. Travel NZ on your own schedule. When you're done, we'll buy it back at a guaranteed price — no haggling, no listing, no hassle.</p>
           <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+            <a href="#enquire" class="btn btn-primary">Enquire now</a>
             <a href="#vans" class="btn btn-dark">See vans for sale</a>
             <a href="#how" class="btn btn-ghost">How it works</a>
           </div>
@@ -241,6 +242,74 @@
     </div>
   </section>
 
+  <!-- Enquiry form -->
+  <section class="section section-cream" id="enquire">
+    <div class="wrap" style="max-width: 720px;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="eyebrow">Get in touch</div>
+        <h2 style="margin: 0.6rem 0 1rem;">Interested in buying with buyback?</h2>
+        <p class="lead">Tell us roughly what you're after and we'll come back with options that fit. No pressure, no sales pitch.</p>
+      </div>
+
+      <form id="buyback-form" style="display: grid; gap: 1rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="booking-field">
+            <label>First name</label>
+            <input type="text" name="firstName" required />
+          </div>
+          <div class="booking-field">
+            <label>Last name</label>
+            <input type="text" name="lastName" />
+          </div>
+        </div>
+        <div class="booking-field">
+          <label>Email</label>
+          <input type="email" name="email" required />
+        </div>
+        <div class="booking-field">
+          <label>Phone (optional)</label>
+          <input type="tel" name="phone" />
+        </div>
+        <div class="booking-field">
+          <label>When are you hoping to travel?</label>
+          <select name="when" style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem;">
+            <option>Within the next month</option>
+            <option>1–3 months away</option>
+            <option>3–6 months away</option>
+            <option>6+ months away</option>
+            <option>Just exploring</option>
+          </select>
+        </div>
+        <div class="booking-field">
+          <label>How long do you want the van for?</label>
+          <select name="duration" style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem;">
+            <option>3 months</option>
+            <option>6 months</option>
+            <option>9 months</option>
+            <option>12 months</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="booking-field">
+          <label>Your budget range</label>
+          <select name="budget" style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem;">
+            <option>Under $30k</option>
+            <option>$30k – $40k</option>
+            <option>$40k – $50k</option>
+            <option>$50k+</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+        <div class="booking-field">
+          <label>Anything else we should know? (optional)</label>
+          <textarea name="message" rows="4" placeholder="Two of us, planning to work remote from the van, want self-contained..." style="border: 0; background: transparent; outline: none; font-family: var(--body); font-size: 0.95rem; resize: vertical;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content: center; padding: 1.1rem;">Send enquiry</button>
+        <p style="font-size: 0.78rem; color: var(--stone); text-align: center; margin-top: 0.4rem;">We respond within one working day.</p>
+      </form>
+    </div>
+  </section>
+
   <!-- FAQ teaser -->
   <section class="section section-sand">
     <div class="wrap" style="max-width: 800px; text-align: center;">
@@ -268,5 +337,36 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    const buybackForm = document.getElementById('buyback-form');
+    if (buybackForm) {
+      buybackForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        const fd = new FormData(buybackForm);
+        const data = Object.fromEntries(fd.entries());
+        const btn = buybackForm.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        try {
+          const res = await fetch('/api/buyback-enquiry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          if (!res.ok) throw new Error('Submission failed');
+          buybackForm.innerHTML = `
+            <div style="text-align:center; padding:3rem; background:var(--sand); border-radius:var(--radius-lg);">
+              <h3>Kia ora — enquiry received.</h3>
+              <p style="color:var(--charcoal-soft); margin-top:1rem;">We'll be in touch within one working day. Check your inbox for a confirmation.</p>
+            </div>`;
+        } catch (err) {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          alert('Something went wrong. Please email buyback@campshare.co.nz directly or try again.');
+        }
+      });
+    }
+  </script>
 </body>
 </html>
